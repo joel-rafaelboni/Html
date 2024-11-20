@@ -97,4 +97,3 @@ window.onload = () => {
     // Atualiza o jogo a cada frame
     setInterval(updateGame, 1000 / 60); // 60 fps
 };
-
