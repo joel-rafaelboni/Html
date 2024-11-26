@@ -1,30 +1,86 @@
-/* Estilo da página */
+/* Estilo geral */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: 100vh;
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
 }
 
-/* Estilo do container do jogo */
+/* Container do jogo */
 .game-container {
-    position: relative;
     text-align: center;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Estilo do canvas */
+/* Estilo para o título */
+h1 {
+    color: #fff;
+}
+
+/* Canvas */
 #gameCanvas {
-    border: 2px solid #333;
+    border: 2px solid #444;
     background-color: #000;
 }
 
 /* Estilo da pontuação */
 #score {
-    margin-top: 10px;
     color: #fff;
     font-size: 18px;
     font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Instruções do jogo */
+.instructions {
+    color: #fff;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.instructions ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Estilo dos botões */
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+/* Estilo para a mensagem de GAME OVER */
+#gameOverMessage {
+    margin-top: 20px;
+    color: #fff;
+}
+
+#gameOverMessage h2 {
+    color: #f44336;
 }
