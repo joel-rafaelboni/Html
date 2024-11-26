@@ -14,11 +14,7 @@ let gameOver = false;
 // Função para desenhar o jogo
 function drawGame() {
     if (gameOver) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = 'white';
-        ctx.font = '30px Arial';
-        ctx.fillText('GAME OVER', canvasSize / 4, canvasSize / 2);
-        ctx.fillText('Pontuação Final: ' + score, canvasSize / 4, canvasSize / 1.5);
+        showGameOver();
         return;
     }
 
@@ -44,7 +40,7 @@ function updateGame() {
 
     // Mover a cobrinha
     const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
-    
+
     // Checa se a cobrinha bateu nas bordas ou em si mesma
     if (
         head.x < 0 || head.x >= canvasSize ||
@@ -88,18 +84,43 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Função para iniciar o jogo
-function startGame() {
-    if (gameOver) {
-        snake = [{ x: 160, y: 160 }];
-        direction = { x: gridSize, y: 0 };
-        food = generateFood();
-        score = 0;
-        gameOver = false;
-    }
-
-    updateGame();
+// Função para reiniciar o jogo
+function resetGame() {
+    snake = [{ x: 160, y: 160 }];
+    direction = { x: gridSize, y: 0 };
+    food = generateFood();
+    score = 0;
+    gameOver = false;
+    document.getElementById('gameOverMessage').style.display = 'none';
+    document.getElementById('restartButton').style.display = 'none';
+    document.getElementById('startButton').style.display = 'none';
+    document.getElementById('score').style.display = 'block';
+    document.getElementById('instructions').style.display = 'block';
 }
 
-// Configura o jogo para rodar a cada 100ms
-setInterval(startGame, 100);
+// Função para exibir a tela de GAME OVER
+function showGameOver() {
+    document.getElementById('gameOverMessage').style.display = 'block';
+    document.getElementById('finalScore').textContent = score;
+    document.getElementById('startButton').style.display = 'none';
+    document.getElementById('restartButton').style.display = 'block';
+    document.getElementById('score').style.display = 'none';
+    document.getElementById('instructions').style.display = 'none';
+}
+
+// Função para iniciar o jogo
+function startGame() {
+    resetGame();
+    setInterval(updateGame, 100);  // Atualiza o jogo a cada 100ms
+}
+
+// Função de reinício
+document.getElementById('restartButton').addEventListener('click', () => {
+    resetGame();
+    setInterval(updateGame, 100);
+});
+
+// Função de iniciar novo jogo
+document.getElementById('startButton').addEventListener('click', () => {
+    startGame();
+});
