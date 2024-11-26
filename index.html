@@ -3,34 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo da Cobrinha</title>
+    <title>Jogo de História Interativa</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="game-container">
-        <h1>Jogo da Cobrinha</h1>
-        
-        <canvas id="gameCanvas" width="400" height="400"></canvas>
-        
-        <div id="score">Pontuação: 0</div>
-        
-        <div class="instructions">
-            <p><strong>Instruções:</strong></p>
-            <ul>
-                <li>Use as teclas de seta (↑, ↓, ←, →) para controlar a cobrinha.</li>
-                <li>Colete a comida (quadrado vermelho) para ganhar pontos.</li>
-                <li>Evite bater nas bordas ou em si mesmo!</li>
-            </ul>
+        <h1>O Destino do Reino</h1>
+        <div id="story-text">
+            <p>Você é um jovem nobre que acaba de assumir a liderança de um pequeno reino. O que você fará a seguir?</p>
         </div>
-
-        <div class="buttons">
-            <button id="startButton">Iniciar Novo Jogo</button>
-            <button id="restartButton" style="display: none;">Reiniciar</button>
-        </div>
-
-        <div id="gameOverMessage" style="display: none;">
-            <h2>GAME OVER</h2>
-            <p>Você perdeu! Pontuação final: <span id="finalScore">0</span></p>
+        
+        <div id="choices">
+            <button class="choice-button" onclick="makeChoice(1)">Confrontar o inimigo no campo de batalha</button>
+            <button class="choice-button" onclick="makeChoice(2)">Tentar negociar com o inimigo e evitar a guerra</button>
         </div>
     </div>
 
