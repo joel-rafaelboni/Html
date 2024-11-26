@@ -1,30 +1,41 @@
 let storyState = {
-    enemyStrength: 5, // Força do inimigo
-    diplomacy: 0,     // Nível de diplomacia
-    morale: 5,        // Moral das tropas
-    resources: 5,     // Recursos do reino
-    trust: 5,         // Nível de confiança com o conselheiro
-    kingdomStability: 5, // Estabilidade do reino
+    enemyStrength: 5,             // Força do inimigo
+    diplomacy: 0,                 // Nível de diplomacia
+    morale: 5,                    // Moral das tropas
+    resources: 5,                 // Recursos do reino
+    trust: 5,                     // Nível de confiança com o conselheiro
+    kingdomStability: 5,          // Estabilidade do reino
+    magicPower: 0,                // Poder mágico desbloqueado
+    legendaryArtifact: false,     // Status do artefato lendário
+    mysticalAllies: 0,            // Número de aliados místicos
+    rebellionThreat: 0,           // Ameaça de rebelião interna
+    cosmicRifts: 0,               // Número de rasgos cósmicos abertos
 };
 
 // Texto da história
 const storyText = {
-    start: "Você é um jovem nobre que acabou de assumir a liderança de um pequeno reino. O que você fará a seguir?",
-    battleChoice: "O inimigo está se aproximando do seu reino com um grande exército. Você pode escolher entre ir ao campo de batalha ou tentar negociar.",
-    battleResult: "A batalha foi árdua, mas você derrotou o inimigo! Seu reino está a salvo, por enquanto.",
-    negotiationChoice: "O inimigo aceitou uma conversa, mas há uma grande desconfiança. Você pretende fazer concessões para evitar a guerra?",
-    negotiationResult: "A negociação foi bem-sucedida, mas seu reino precisará ceder em algumas áreas. Sua diplomacia aumentou, mas seus inimigos agora estão mais confiantes.",
-    rebellionChoice: "Seu povo está começando a questionar sua liderança. Você vai tentar um discurso para reconquistar a confiança deles ou usar a força militar?",
-    rebellionOutcome: "Seu discurso foi poderoso, e o povo voltou a confiar em você. Porém, a força militar aumentou, criando tensões internas.",
-    finalOutcome: "Com base em suas escolhas, o futuro do reino está em suas mãos. O que você decidirá a seguir?",
+    start: "Você é um jovem nobre que acabou de assumir a liderança de Andorin, um reino pequeno, mas cheio de história. Porém, uma força misteriosa parece estar despertando...",
     
-    // Novas histórias
-    allyChoice: "Um velho aliado aparece pedindo ajuda. Ele está sendo atacado por uma facção rebelde. Você irá ajudá-lo?",
-    allyOutcome: "Você ajudou seu aliado, mas a facção rebelde ficou mais forte. Agora você tem uma dívida com ele.",
-    traitorChoice: "Seu conselheiro está agindo de maneira estranha. Você vai investigar suas ações?",
-    traitorOutcome: "Você descobriu que o conselheiro estava traindo o reino. Agora você precisa lidar com as consequências de sua traição.",
-    finalBattle: "O inimigo se aliou a facções internas. Uma grande batalha se aproxima. Seu reino está pronto?",
-    finalBattleOutcome: "A batalha foi decisiva. Seu reino ou floresceu ou caiu, dependendo das escolhas anteriores.",
+    firstChoice: "O inimigo, uma força sombria conhecida como Legião de Ulhar, começa a marchar para o reino. Você pode: a) Enfrentar as forças diretamente no campo de batalha, b) Tentar negociar com eles, ou c) Buscar um poder oculto nas antigas ruínas do reino.",
+    
+    battleChoice: "Você decidiu enfrentar o inimigo. Suas tropas estão prontas, mas a força deles é imensa. Você usará algum poder mágico, uma estratégia militar ou outra abordagem?",
+    battleOutcome: "A batalha foi feroz, mas graças a sua estratégia, você venceu... ou pelo menos, isso parece. O futuro está incerto.",
+    
+    negotiationChoice: "O inimigo aceitou conversar, mas a desconfiança é palpável. Eles oferecem uma aliança, mas há um preço. Você está disposto a pagar?",
+    negotiationOutcome: "A negociação foi difícil, e você teve que ceder a muitas condições. O reino está agora marcado pela influência dos inimigos, mas um novo equilíbrio foi estabelecido.",
+    
+    rebellionChoice: "O povo está começando a questionar sua liderança. Você pode: a) Fazer um grande discurso para restaurar a confiança, b) Usar força militar, ou c) Negociar com facções rebeldes em segredo.",
+    rebellionOutcome: "Seu discurso foi poderoso e o povo voltou a confiar em você... mas você percebe que as facções rebeldes não desistiram e agora têm mais influência.",
+    
+    finalChoice: "Uma batalha final se aproxima. Com suas escolhas ao longo do caminho, o destino de Andorin está em suas mãos. Você pode: a) Confrontar o inimigo diretamente, b) Sacrificar parte do reino para obter uma vantagem sobrenatural, c) Tentar fechar um pacto com um deus desconhecido.",
+    
+    magicalChoice: "Um artefato mágico foi encontrado. Seu poder é imenso, mas também é perigoso. Você pode: a) Usá-lo para fortalecer suas tropas, b) Tentar destruir o artefato para evitar que ele caia nas mãos erradas, c) Levar o artefato para os sacerdotes, esperando que eles saibam o que fazer.",
+    
+    mysticalAlliesChoice: "Um misterioso mago aparece em sua corte, oferecendo ajuda. Ele afirma que pode chamar aliados místicos de outros planos, mas por um preço. Você aceitará?",
+    
+    cosmicEventChoice: "Rasgamentos cósmicos começaram a se abrir por todo o reino. Forças do além estão entrando em Andorin. Você pode: a) Usar sua magia para tentar fechar os rasgamentos, b) Explorar os rasgamentos em busca de poder, ou c) Alinhar-se com as forças cósmicas, sabendo que isso pode mudar tudo para sempre.",
+    
+    finalOutcome: "Com base em suas escolhas, o futuro do reino está incerto. Andorin pode se tornar uma nação poderosa ou cair em ruínas. O que acontecerá agora depende de você."
 };
 
 // Função para atualizar o texto da história e as opções de escolha
@@ -45,76 +56,106 @@ function updateStory(text, choices = []) {
 function makeChoice(choice) {
     switch(choice) {
         case 1:
-            // Confrontar o inimigo no campo de batalha
-            storyState.enemyStrength -= 2; // Diminui a força do inimigo
-            storyState.morale += 2; // A moral das tropas aumenta
-            updateStory(storyText.battleResult, [
+            // Enfrentar no campo de batalha
+            storyState.enemyStrength -= 2;
+            storyState.morale += 1;
+            storyState.magicPower += 1;
+            updateStory(storyText.battleOutcome, [
                 { text: "Continuar", result: 2 }
             ]);
             break;
         
         case 2:
             // Negociar com o inimigo
-            storyState.diplomacy += 2; // Aumenta a diplomacia
-            storyState.enemyStrength += 1; // O inimigo se fortalece
-            updateStory(storyText.negotiationResult, [
+            storyState.diplomacy += 2;
+            storyState.enemyStrength += 1;
+            storyState.rebellionThreat += 1;
+            updateStory(storyText.negotiationOutcome, [
                 { text: "Continuar", result: 3 }
             ]);
             break;
 
         case 3:
-            // Discurso ou usar força militar
-            if (storyState.morale > 3) {
-                storyState.morale += 1; // Confiança aumentada
-                storyState.kingdomStability += 2; // Estabilidade aumentada
-                updateStory(storyText.rebellionOutcome, [
-                    { text: "Continuar", result: 4 }
-                ]);
-            } else {
-                storyState.kingdomStability -= 1; // Estabilidade do reino diminui
-                updateStory(storyText.rebellionOutcome, [
-                    { text: "Continuar", result: 4 }
-                ]);
-            }
+            // Buscar poder mágico
+            storyState.magicPower += 2;
+            storyState.resources -= 1;
+            updateStory(storyText.magicalChoice, [
+                { text: "Usar poder mágico", result: 4 },
+                { text: "Destruir o artefato", result: 5 },
+                { text: "Levar aos sacerdotes", result: 6 }
+            ]);
             break;
 
         case 4:
-            // O aliado aparece pedindo ajuda
-            if (storyState.resources > 3) {
-                storyState.resources -= 2; // Recursos do reino diminuem
-                storyState.morale += 2; // A moral do reino aumenta
-                updateStory(storyText.allyOutcome, [
-                    { text: "Preparar para a batalha final", result: 5 }
+            // Usar poder mágico
+            if (storyState.magicPower > 2) {
+                storyState.enemyStrength -= 2;
+                updateStory("O poder mágico alterou o curso da batalha. As forças sombrias foram derrotadas.", [
+                    { text: "Finalizar", result: 7 }
                 ]);
             } else {
-                storyState.resources -= 3; // Recurso diminuído drasticamente
-                updateStory(storyText.allyOutcome, [
-                    { text: "Preparar para a batalha final", result: 5 }
+                updateStory("O poder mágico não foi suficiente. O inimigo ainda é forte.", [
+                    { text: "Continuar", result: 8 }
                 ]);
             }
             break;
 
         case 5:
-            // Traição do conselheiro
-            if (storyState.trust > 3) {
-                storyState.trust -= 2; // Confiança diminui
-                storyState.kingdomStability -= 1; // Estabilidade do reino abaixa
-                updateStory(storyText.traitorOutcome, [
-                    { text: "Reorganizar suas forças", result: 6 }
+            // Destruir o artefato
+            storyState.magicPower = 0;
+            updateStory("Você destruiu o artefato, mas algo se quebrou dentro de você. O reino perde uma grande chance de poder.", [
+                { text: "Continuar", result: 8 }
+            ]);
+            break;
+
+        case 6:
+            // Levar aos sacerdotes
+            storyState.resources -= 2;
+            storyState.mysticalAllies += 1;
+            updateStory("Os sacerdotes decifram o artefato e o entregam para você. Seu poder mágico agora é imenso!", [
+                { text: "Finalizar", result: 7 }
+            ]);
+            break;
+
+        case 7:
+            // Final - vitória ou derrota
+            if (storyState.enemyStrength < 3 && storyState.kingdomStability > 4) {
+                updateStory("Você venceu! O reino de Andorin prospera, com um novo equilíbrio entre as forças mágicas e mundanas.", [
+                    { text: "Recomeçar", result: 0 }
                 ]);
             } else {
-                storyState.kingdomStability -= 2; // Mais instabilidade
-                updateStory(storyText.traitorOutcome, [
-                    { text: "Reorganizar suas forças", result: 6 }
+                updateStory("O reino caiu, envolto em sombras e destruição. As forças cósmicas destruíram tudo.", [
+                    { text: "Recomeçar", result: 0 }
                 ]);
             }
             break;
 
-        case 6:
-            // Batalha final
-            if (storyState.enemyStrength < 4 && storyState.kingdomStability > 4) {
-                updateStory("A batalha foi difícil, mas você venceu. O reino agora está em paz!", [
-                    { text: "Recomeçar", result: 0 }
-                ]);
-            } else {
-                updateStory("O inimigo se alicerçou no poder,
+        case 8:
+            // Continuar a luta
+            updateStory(storyText.finalChoice, [
+                { text: "Confrontar o inimigo", result: 1 },
+                { text: "Pacto com os deuses", result: 9 },
+                { text: "Sacrifício do reino", result: 10 }
+            ]);
+            break;
+
+        case 9:
+            // Pacto com os deuses
+            updateStory("Você fez um pacto com um deus desconhecido. O destino do reino agora está além do seu controle.", [
+                { text: "Final", result: 7 }
+            ]);
+            break;
+
+        case 10:
+            // Sacrifício do reino
+            updateStory("Você sacrificou uma parte do reino, mas com isso obteve um poder imenso. Agora, o destino de Andorin depende apenas de você.", [
+                { text: "Final", result: 7 }
+            ]);
+            break;
+    }
+}
+
+// Começo do jogo
+updateStory(storyText.start, [
+    { text: "Iniciar", result: 1 }
+]);
