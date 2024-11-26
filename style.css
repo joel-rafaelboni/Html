@@ -1,61 +1,36 @@
 /* Estilo geral */
 body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     height: 100vh;
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-}
-
-/* Container do jogo */
-.game-container {
     text-align: center;
+}
+
+.game-container {
     background-color: #222;
-    padding: 20px;
+    color: #fff;
     border-radius: 10px;
+    padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 400px;
 }
 
-/* Estilo para o título */
 h1 {
-    color: #fff;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-/* Canvas */
-#gameCanvas {
-    border: 2px solid #444;
-    background-color: #000;
-}
-
-/* Estilo da pontuação */
-#score {
-    color: #fff;
+#story-text {
     font-size: 18px;
-    font-weight: bold;
-    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
-/* Instruções do jogo */
-.instructions {
-    color: #fff;
-    margin-top: 20px;
-    font-size: 16px;
-}
-
-.instructions ul {
-    list-style: none;
-    padding: 0;
-}
-
-/* Estilo dos botões */
-.buttons {
-    margin-top: 20px;
-}
-
-button {
+.choice-button {
     padding: 10px 20px;
     margin: 10px;
     background-color: #4CAF50;
@@ -64,23 +39,9 @@ button {
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
+    width: 100%;
 }
 
-button:hover {
+.choice-button:hover {
     background-color: #45a049;
-}
-
-button:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-}
-
-/* Estilo para a mensagem de GAME OVER */
-#gameOverMessage {
-    margin-top: 20px;
-    color: #fff;
-}
-
-#gameOverMessage h2 {
-    color: #f44336;
 }
