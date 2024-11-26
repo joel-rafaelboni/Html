@@ -1,81 +1,30 @@
-/* Resetando margens e preenchimento */
-* {
+/* Estilo da página */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
 }
 
 /* Estilo do container do jogo */
 .game-container {
-    text-align: center;
-    padding: 20px;
-}
-
-/* Estilo do título */
-h1 {
-    font-family: Arial, sans-serif;
-    color: #333;
-}
-
-/* Estilo do botão */
-#startButton {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-#startButton:hover {
-    background-color: #45a049;
-}
-
-/* Estilo da área do jogo */
-#gameArea {
-    width: 600px;
-    height: 400px;
-    background-color: #eee;
     position: relative;
-    margin-top: 30px;
+    text-align: center;
+}
+
+/* Estilo do canvas */
+#gameCanvas {
     border: 2px solid #333;
-    display: none; /* Inicialmente escondido */
+    background-color: #000;
 }
 
-/* Jogadores */
-.player {
-    width: 10px;
-    height: 60px;
-    background-color: #333;
-    position: absolute;
-    bottom: 50%;
-}
-
-/* Jogador 1 à esquerda */
-#player1 {
-    left: 0;
-}
-
-/* Jogador 2 à direita */
-#player2 {
-    right: 0;
-}
-
-/* Bola */
-#ball {
-    width: 15px;
-    height: 15px;
-    background-color: red;
-    border-radius: 50%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -7.5px; /* Para centralizar */
-    margin-top: -7.5px; /* Para centralizar */
-}
-
-/* Classe para esconder a área do jogo */
-.hidden {
-    display: none;
+/* Estilo da pontuação */
+#score {
+    margin-top: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
 }
