@@ -1,99 +1,105 @@
-// Variáveis do jogo
-let ball, player1, player2, gameArea, startButton;
-let ballSpeedX = 2, ballSpeedY = 2;
-let player1Speed = 0, player2Speed = 0;
-let gameInterval;
+// Definindo o canvas e o contexto
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// Definindo as variáveis do jogo
+const gridSize = 20; // Tamanho das células do grid
+const canvasSize = 400; // Tamanho do canvas
+let snake = [{ x: 160, y: 160 }];
+let direction = { x: gridSize, y: 0 }; // Começa movendo para a direita
+let food = { x: 100, y: 100 };
+let score = 0;
+let gameOver = false;
+
+// Função para desenhar o jogo
+function drawGame() {
+    if (gameOver) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white';
+        ctx.font = '30px Arial';
+        ctx.fillText('GAME OVER', canvasSize / 4, canvasSize / 2);
+        ctx.fillText('Pontuação Final: ' + score, canvasSize / 4, canvasSize / 1.5);
+        return;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas
+
+    // Desenha a cobrinha
+    ctx.fillStyle = 'lime';
+    snake.forEach((segment) => {
+        ctx.fillRect(segment.x, segment.y, gridSize, gridSize);
+    });
+
+    // Desenha a comida
+    ctx.fillStyle = 'red';
+    ctx.fillRect(food.x, food.y, gridSize, gridSize);
+
+    // Atualiza a pontuação
+    document.getElementById('score').textContent = 'Pontuação: ' + score;
+}
+
+// Função para atualizar o estado do jogo
+function updateGame() {
+    if (gameOver) return;
+
+    // Mover a cobrinha
+    const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+    
+    // Checa se a cobrinha bateu nas bordas ou em si mesma
+    if (
+        head.x < 0 || head.x >= canvasSize ||
+        head.y < 0 || head.y >= canvasSize ||
+        snake.some(segment => segment.x === head.x && segment.y === head.y)
+    ) {
+        gameOver = true;
+        return;
+    }
+
+    snake.unshift(head);
+
+    // Checa se a cobrinha comeu a comida
+    if (head.x === food.x && head.y === food.y) {
+        score += 10;
+        food = generateFood();
+    } else {
+        snake.pop(); // Remove a cauda
+    }
+
+    drawGame();
+}
+
+// Função para gerar a comida em uma posição aleatória
+function generateFood() {
+    const x = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
+    const y = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
+    return { x, y };
+}
+
+// Função para controlar a direção da cobrinha com as teclas
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp' && direction.y === 0) {
+        direction = { x: 0, y: -gridSize };
+    } else if (e.key === 'ArrowDown' && direction.y === 0) {
+        direction = { x: 0, y: gridSize };
+    } else if (e.key === 'ArrowLeft' && direction.x === 0) {
+        direction = { x: -gridSize, y: 0 };
+    } else if (e.key === 'ArrowRight' && direction.x === 0) {
+        direction = { x: gridSize, y: 0 };
+    }
+});
 
 // Função para iniciar o jogo
 function startGame() {
-    // Esconder o botão de começar e mostrar a área de jogo
-    startButton.style.display = 'none';
-    gameArea.style.display = 'block';
+    if (gameOver) {
+        snake = [{ x: 160, y: 160 }];
+        direction = { x: gridSize, y: 0 };
+        food = generateFood();
+        score = 0;
+        gameOver = false;
+    }
 
-    // Iniciar o movimento da bola
-    gameInterval = setInterval(moveBall, 1000 / 60); // 60 frames por segundo
+    updateGame();
 }
 
-// Função para mover a bola
-function moveBall() {
-    let ballRect = ball.getBoundingClientRect();
-    let player1Rect = player1.getBoundingClientRect();
-    let player2Rect = player2.getBoundingClientRect();
-    let gameAreaRect = gameArea.getBoundingClientRect();
-
-    // Movendo a bola
-    ball.style.left = ball.offsetLeft + ballSpeedX + 'px';
-    ball.style.top = ball.offsetTop + ballSpeedY + 'px';
-
-    // Verifica colisão com a parede superior e inferior
-    if (ball.offsetTop <= 0 || ball.offsetTop + ball.offsetHeight >= gameAreaRect.height) {
-        ballSpeedY = -ballSpeedY; // Inverte direção
-    }
-
-    // Verifica colisão com os jogadores
-    if (ball.offsetLeft <= player1Rect.right && ball.offsetTop + ball.offsetHeight >= player1Rect.top && ball.offsetTop <= player1Rect.bottom) {
-        ballSpeedX = -ballSpeedX;
-    }
-    if (ball.offsetLeft + ball.offsetWidth >= player2Rect.left && ball.offsetTop + ball.offsetHeight >= player2Rect.top && ball.offsetTop <= player2Rect.bottom) {
-        ballSpeedX = -ballSpeedX;
-    }
-
-    // Verifica se a bola saiu da área de jogo (ponto)
-    if (ball.offsetLeft <= 0 || ball.offsetLeft + ball.offsetWidth >= gameAreaRect.width) {
-        resetBall();
-    }
-}
-
-// Função para resetar a bola
-function resetBall() {
-    ball.style.left = '50%';
-    ball.style.top = '50%';
-    ballSpeedX = -ballSpeedX; // Inverte a direção
-}
-
-// Função para mover os jogadores
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowUp') player2Speed = -5;
-    if (e.key === 'ArrowDown') player2Speed = 5;
-    if (e.key === 'w') player1Speed = -5;
-    if (e.key === 's') player1Speed = 5;
-});
-
-document.addEventListener('keyup', (e) => {
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') player2Speed = 0;
-    if (e.key === 'w' || e.key === 's') player1Speed = 0;
-});
-
-// Atualiza as posições dos jogadores
-function movePlayers() {
-    let player1Top = player1.offsetTop + player1Speed;
-    let player2Top = player2.offsetTop + player2Speed;
-
-    // Impede que os jogadores saiam da área de jogo
-    if (player1Top >= 0 && player1Top + player1.offsetHeight <= gameArea.offsetHeight) {
-        player1.style.top = player1Top + 'px';
-    }
-    if (player2Top >= 0 && player2Top + player2.offsetHeight <= gameArea.offsetHeight) {
-        player2.style.top = player2Top + 'px';
-    }
-}
-
-// Função principal para atualizar o jogo
-function updateGame() {
-    moveBall();
-    movePlayers();
-}
-
-// Inicia o jogo quando a página carrega
-window.onload = () => {
-    ball = document.getElementById('ball');
-    player1 = document.getElementById('player1');
-    player2 = document.getElementById('player2');
-    gameArea = document.getElementById('gameArea');
-    startButton = document.getElementById('startButton');
-
-    startButton.addEventListener('click', startGame);
-
-    // Atualiza o jogo a cada frame
-    setInterval(updateGame, 1000 / 60); // 60 fps
-};
+// Configura o jogo para rodar a cada 100ms
+setInterval(startGame, 100);
